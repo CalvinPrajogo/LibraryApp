@@ -1,9 +1,18 @@
 #header {
     text-align: center;
     font-weight: bold;
-    font-size: 35px;
 }
 
-#book-container {
+#library-container {
     display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.book {
+    border: 1px solid black;
+    padding: 10px;
+    width: 200px;
 }
