@@ -31,4 +31,38 @@ function displayLibrary() {
     })
 }
 
+// Prompt the user for book info to add book
+function getBookInfo() {
+    dialog = document.createElement("dialog");
+    dialog.innerHTML = `
+        <h2>Add Book</h2>
+        <form action="#" method="post" id="book-form">
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title">
+            <label for="author">Author:</label>
+            <input type="text" id="author" name="author">
+            <label for="pages">Number of Pages:</label>
+            <input type="text" id="pages" name="pages">
+            <button type="submit">Add</button>
+        </form>`;
+    
+    document.body.appendChild(dialog);
+
+    // Add event handler to get data - make sure its in the function where dialog exists
+    dialog.querySelector("#book-form").addEventListener("submit", function(e) {
+        e.preventDefault(); // Prevent form submission (default behavior)
+
+        const formData = new FormData(this);
+        const title = formData.get("title");
+        const author = formData.get("author");
+        const pages = formData.get("pages");
+
+        addBook(title, author, pages);
+        displayLibrary();
+        dialog.close();
+    })
+
+    dialog.showModal();
+}
+
 displayLibrary();
