@@ -23,10 +23,12 @@ function displayLibrary() {
     myLibrary.forEach(book => {
         const bookDiv = document.createElement("div");
         bookDiv.classList.add("book");
+        bookDiv.setAttribute("data-book-id", book.id);
         bookDiv.innerHTML = `
             <h3>${book.title}</h3>
             <p>Author: ${book.author}</p>
-            <p>Pages: ${book.pages}</p>`;
+            <p>Pages: ${book.pages}</p>
+            <button class="remove-book">Remove</button>`;
         libraryContainer.appendChild(bookDiv);
     })
 }
@@ -58,11 +60,27 @@ function getBookInfo() {
         const pages = formData.get("pages");
 
         addBook(title, author, pages);
-        displayLibrary();
+        displayLibrary(); // Display library with added book
         dialog.close();
     })
 
     dialog.showModal();
 }
+
+// Remove button functionality
+document.addEventListener("click", function(e) {
+    if (e.target.classList.contains("remove-book")) {
+        const bookDiv = e.target.closest(".book")
+        const bookId = bookDiv.dataset.bookId;
+
+        for (let i = 0; i < myLibrary.length; i++) {
+            if (myLibrary[i].id == bookId) {
+                myLibrary.splice(i, 1);
+            }
+        }
+        // Display updated library
+        displayLibrary();
+    }
+})
 
 displayLibrary();
