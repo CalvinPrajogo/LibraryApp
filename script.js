@@ -28,9 +28,13 @@ function displayLibrary() {
             <h3>${book.title}</h3>
             <p>Author: ${book.author}</p>
             <p>Pages: ${book.pages}</p>
-            <button class="remove-book">Remove</button>`;
+            <button class="remove-book">Remove</button>
+            <label>
+                <input type="checkbox" class="bookCheckbox" name="bookCheckbox">
+                Mark as read 
+            </label>`;
         libraryContainer.appendChild(bookDiv);
-    })
+    });
 }
 
 // Prompt the user for book info to add book
@@ -80,6 +84,22 @@ document.addEventListener("click", function(e) {
         }
         // Display updated library
         displayLibrary();
+    }
+})
+
+// Add book prototype function and attribute to toggle read status
+Book.prototype.read = false;
+Book.prototype.toggleRead = function() {
+    this.read = !this.read;
+}
+
+document.addEventListener("change", function(e) {
+    if (e.target.classList.contains("bookCheckbox")) {
+        const bookDiv = e.target.closest(".book");
+        const bookId = bookDiv.dataset.bookId;
+
+        const book = myLibrary.find(book => book.id === bookId);
+        book.toggleRead();
     }
 })
 
